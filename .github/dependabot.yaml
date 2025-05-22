@@ -1,0 +1,21 @@
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: '12:00'
+      timezone: 'Europe/London'
+    commit-message:
+      prefix: chore(ci)
+    labels: [actions]
+    open-pull-requests-limit: 3
+    groups:
+      automerged-security:
+        applies-to: security-updates
+        update-types: [minor, patch]
+      automerged-versions:
+        applies-to: version-updates
+        update-types: [minor, patch]
