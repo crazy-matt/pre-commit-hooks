@@ -1,0 +1,7 @@
+default_stages: [pre-commit, manual]
+repos:
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.0
+    hooks:
+      - id: markdownlint-cli2
+        args: [--config=.linters/.markdownlint-cli2.yaml]
