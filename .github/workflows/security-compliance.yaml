@@ -1,0 +1,113 @@
+name: Security Compliance
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Job to run
+        type: choice
+        options:
+          - Lint commit messages
+          - Secrets Scan
+          - Vulnerability Scan
+        required: false
+        default: Vulnerability Scan
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  lint_commits:
+    name: Lint commit messages
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    if: |
+      github.event.inputs.job == 'Lint commit messages' ||
+      (github.event.forced == false &&
+      github.actor != 'dependabot[bot]' &&
+      !startsWith(github.head_ref, 'release-please'))
+    permissions:
+      contents: read
+      pull-requests: read
+      id-token: write
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        with:
+          policy: default
+          egress-policy: audit
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+      - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          configFile: .github/.linters/commitlint.config.mjs
+
+  secrets_scan:
+    name: Secrets Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    if: |
+      github.event.inputs.job == 'Secrets Scan' ||
+      (github.actor != 'dependabot[bot]' &&
+      !startsWith(github.head_ref, 'release-please'))
+    permissions:
+      contents: read
+      pull-requests: read
+      id-token: write
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        with:
+          policy: default
+          egress-policy: audit
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # ratchet:gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: ${{ github.workspace }}/.security/gitleaks.toml
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: false # sarif upload, would need 'security-events: write'
+          GITLEAKS_ENABLE_SUMMARY: true
+          GITLEAKS_VERSION: 8.22.0
+
+  vulnerability_scan:
+    name: Vulnerability Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: |
+      github.event.inputs.job == 'Vulnerability Scan' ||
+      github.actor != 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      security-events: write
+      id-token: write
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        with:
+          policy: default
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+      - name: Detect vulnerabilities
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # ratchet:aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          github-pat: ${{ secrets.GITHUB_TOKEN }}
+          format: github
+          output: sbom.json
+          trivy-config: .security/trivy.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
