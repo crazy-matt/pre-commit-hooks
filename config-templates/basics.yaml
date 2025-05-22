@@ -1,0 +1,26 @@
+default_stages: [pre-commit, manual]
+repos:
+  - repo: https://github.com/crazy-matt/pre-commit-hooks
+    rev: 1.0.0
+    hooks:
+      - id: detect-unsigned-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+      #- id: check-yaml
+      - id: detect-private-key
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: Gitleaks
+        entry: gitleaks detect --no-banner --source . --config .security/gitleaks.toml --verbose --no-git
+        language: system
+  #- repo:  https://github.com/milin/giticket
+  #  rev: v1.4
+  #  hooks:
+  #    - id: giticket
+  #      args: ['--mode=regex_match', '--regex=[A-Z]+-\d+', '--format={ticket} {commit_msg}']
+  #      stages: [commit-msg]

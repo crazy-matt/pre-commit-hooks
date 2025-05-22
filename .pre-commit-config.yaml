@@ -1,0 +1,23 @@
+default_stages: [pre-commit, manual]
+repos:
+  - repo: https://github.com/crazy-matt/pre-commit-hooks
+    rev: 1.0.0
+    hooks:
+      - id: detect-unsigned-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.10.0
+    hooks:
+      - id: shellcheck
+        args: ['--source-path=hooks/shell', '--severity=error'] # Only show errors
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: Gitleaks
+        entry: gitleaks detect --no-banner --source . --config .security/gitleaks.toml --verbose --no-git
+        language: system
