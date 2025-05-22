@@ -1,0 +1,58 @@
+- id: detect-unencrypted-ansible-vault
+  name: Ansible Vaults Encryption Check
+  description: Check that Ansible vault files are encrypted.
+  entry: hooks/shell/detect-unencrypted-ansible-vault.sh
+  files: ((^|/)vault|vault.y[a]{0,1}ml$|.vault$)
+  language: script
+  types: [executable]
+
+- id: detect-unsigned-commit
+  name: Git Commit PGP Signature Verification
+  description: Warn you when you push unsigned commits.
+  entry: hooks/shell/detect-unsigned-commit.sh
+  language: script
+  types: [executable]
+  always_run: true
+  stages: [pre-commit]
+
+- id: terragrunt-fmt
+  name: Terragrunt Format
+  description: Format all Terragrunt configurations under the folders passed as parameter.
+  entry: hooks/shell/terragrunt-fmt.sh
+  require_serial: true
+  language: script
+
+- id: terragrunt-validate
+  name: Terragrunt Validate
+  description: Validates all Terragrunt configurations under the folders passed as parameter.
+  entry: hooks/shell/terragrunt-validate.sh
+  require_serial: true
+  language: script
+
+- id: terraform-fmt
+  name: Terraform Format
+  description: Format all Terraform configurations passed as parameter.
+  entry: hooks/shell/terraform-fmt.sh
+  require_serial: true
+  language: script
+
+- id: terraform-validate
+  name: Terraform Validate
+  description: Validates all Terraform configurations passed as parameter.
+  entry: hooks/shell/terraform-validate.sh
+  require_serial: true
+  language: script
+
+- id: terraform-docs
+  name: Terraform Docs
+  description: Generate the module/component README.md Terraform Documentation with inject mode.
+  entry: hooks/shell/terraform-docs.sh
+  require_serial: true
+  language: script
+
+- id: trivy-vulnerabilites
+  name: Trivy Vulnerability Check
+  description: Check for HIGH and CRITICAL security vulnerabilities.
+  entry: hooks/shell/trivy-vulnerabilites.sh
+  require_serial: true
+  language: script
