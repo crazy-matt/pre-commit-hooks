@@ -54,10 +54,7 @@ jobs:
     name: Secrets Scan
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    if: |
-      github.event.inputs.job == 'Secrets Scan' ||
-      (github.actor != 'dependabot[bot]' &&
-      !startsWith(github.head_ref, 'release-please'))
+    if: github.event.inputs.job == 'Secrets Scan' || github.actor != 'dependabot[bot]'
     permissions:
       contents: read
       pull-requests: read
@@ -85,9 +82,7 @@ jobs:
     name: Vulnerability Scan
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: |
-      github.event.inputs.job == 'Vulnerability Scan' ||
-      github.actor != 'dependabot[bot]'
+    if: github.event.inputs.job == 'Vulnerability Scan' || github.actor != 'dependabot[bot]'
     permissions:
       contents: write
       pull-requests: write
