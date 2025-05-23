@@ -17,8 +17,6 @@ on:
       - '.github/release-please-config.json'
       - '.github/release-please-manifest.json'
       - 'hooks/**'
-  release:
-    types: [published]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,45 +60,3 @@ jobs:
           config-file: .github/release-please-config.json
           manifest-file: .github/release-please-manifest.json
           token: ${{ secrets.BOT_TOKEN }}
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    if: github.event_name == 'release'
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
-        with:
-          token: ${{ secrets.BOT_TOKEN }}
-          ref: ${{ github.event.release.tag_name }}
-      - name: Configure Git
-        run: |
-          gpg --import <(echo "${{ secrets.BOT_GPG_PRIVATE_KEY_BASE64 }}" | base64 -d)
-          git config user.name "gha-bot"
-          git config user.email "gha-bot.noreply.wdx1x@tenet.pm"
-          git config user.signingkey "ABD02F54EDDADCB6"
-          git config commit.gpgsign true
-      - name: Extract major and minor versions
-        run: |
-          TAG_NAME="${{ github.event.release.tag_name }}"
-          MAJOR=$(echo "$TAG_NAME" | cut -d. -f1)
-          MINOR=$(echo "$TAG_NAME" | cut -d. -f2)
-          echo "MAJOR=$MAJOR" >> $GITHUB_ENV
-          echo "MINOR=$MINOR" >> $GITHUB_ENV
-      - name: Create major and minor version tags
-        run: |
-          # Create or update major version tag
-          git tag -d $MAJOR || true
-          git push origin :$MAJOR || true
-          git tag -s -a $MAJOR -m "Release $MAJOR"
-
-          # Create or update minor version tag
-          git tag -d $MAJOR.$MINOR || true
-          git push origin :$MAJOR.$MINOR || true
-          git tag -s -a $MAJOR.$MINOR -m "Release $MAJOR.$MINOR"
-
-          # Push tags
-          git push origin $MAJOR $MAJOR.$MINOR
