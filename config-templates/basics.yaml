@@ -1,7 +1,7 @@
 default_stages: [pre-commit, manual]
 repos:
   - repo: https://github.com/crazy-matt/pre-commit-hooks
-    rev: 1.0.0
+    rev: v1.0.0
     hooks:
       - id: detect-unsigned-commit
   - repo: https://github.com/pre-commit/pre-commit-hooks
