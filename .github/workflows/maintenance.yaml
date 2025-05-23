@@ -61,7 +61,7 @@ jobs:
           go-version: 1.23
       - name: Install Ratchet
         if: steps.filter.outputs.workflows == 'true'
-        run: GOPROXY=direct go install github.com/sethvargo/ratchet@ee93c849418d0b9316703bb349055a4078ad205e # ratchet:v0.10.2
+        run: go install github.com/sethvargo/ratchet@ee93c849418d0b9316703bb349055a4078ad205e # ratchet:v0.10.2
       - name: Pin
         if: steps.filter.outputs.workflows == 'true'
         run: ratchet pin $(ls .github/workflows/*.{yaml,yml} 2>/dev/null)
