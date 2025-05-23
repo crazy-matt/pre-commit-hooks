@@ -35,6 +35,7 @@ jobs:
       (github.event_name == 'pull_request' && !startsWith(github.head_ref, 'release-please'))
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
