@@ -38,12 +38,12 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - uses: ./.github/actions/allow-endpoints
         with:
           gist-id: 2af7544c14b2b137019d15e53fb06a03
           gist-token: ${{ secrets.BOT_TOKEN }}
-      - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -59,14 +59,14 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
-      - uses: ./.github/actions/allow-endpoints
-        with:
-          gist-id: 2af7544c14b2b137019d15e53fb06a03
-          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: ./.github/actions/allow-endpoints
+        with:
+          gist-id: 2af7544c14b2b137019d15e53fb06a03
+          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Scan
         uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # ratchet:gitleaks/gitleaks-action@v2
         env:
@@ -88,12 +88,12 @@ jobs:
       security-events: write
       id-token: write
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - uses: ./.github/actions/allow-endpoints
         with:
           gist-id: 2af7544c14b2b137019d15e53fb06a03
           gist-token: ${{ secrets.BOT_TOKEN }}
-      - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - name: Detect vulnerabilities
         uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # ratchet:aquasecurity/trivy-action@master
         with:

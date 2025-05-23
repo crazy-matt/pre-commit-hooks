@@ -36,15 +36,15 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: ./.github/actions/allow-endpoints
-        with:
-          gist-id: 2af7544c14b2b137019d15e53fb06a03
-          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
         with:
           token: ${{ secrets.BOT_TOKEN }}
           ref: ${{ github.head_ref || github.ref_name }}
+      - uses: ./.github/actions/allow-endpoints
+        with:
+          gist-id: 2af7544c14b2b137019d15e53fb06a03
+          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Check for workflow file changes
         id: filter
         uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # ratchet:dorny/paths-filter@v3.0.2
