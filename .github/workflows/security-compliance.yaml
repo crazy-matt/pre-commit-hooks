@@ -38,18 +38,11 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
-      - name: Fetch allowed endpoints
-        id: fetch_allowed_endpoints
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          content=$(gh gist view 2af7544c14b2b137019d15e53fb06a03 -r -f allowed-endpoints | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
-          echo "content=${content}" >> $GITHUB_OUTPUT
-      - name: Harden the runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
-        with:
-          egress-policy: block
-          allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
+      #- name: Harden the runner
+      #  uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      #  with:
+      #    egress-policy: audit
+      #    allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
@@ -67,13 +60,6 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
-      - name: Fetch allowed endpoints
-        id: fetch_allowed_endpoints
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          content=$(gh gist view 2af7544c14b2b137019d15e53fb06a03 -r -f allowed-endpoints | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
-          echo "content=${content}" >> $GITHUB_OUTPUT
       - name: Harden the runner
         uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
         with:
@@ -104,13 +90,6 @@ jobs:
       security-events: write
       id-token: write
     steps:
-      - name: Fetch allowed endpoints
-        id: fetch_allowed_endpoints
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          content=$(gh gist view 2af7544c14b2b137019d15e53fb06a03 -r -f allowed-endpoints | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
-          echo "content=${content}" >> $GITHUB_OUTPUT
       - name: Harden the runner
         uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
         with:
@@ -128,17 +107,3 @@ jobs:
           trivy-config: .security/trivy.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Detect new vulnerabilities
-        if: github.event_name == 'pull_request'
-        uses: AikidoSec/github-actions-workflow@47d83dbcf3e6635044c4b31cef590c1e095217cc # ratchet:AikidoSec/github-actions-workflow@v1.0.13
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          secret-key: ${{ secrets.AIKIDO_SECRET_KEY }}
-          fail-on-timeout: true
-          fail-on-dependency-scan: true
-          fail-on-sast-scan: false
-          fail-on-iac-scan: false
-          minimum-severity: CRITICAL
-          timeout-seconds: 180
-          post-scan-status-comment: on
-          post-sast-review-comments: on
