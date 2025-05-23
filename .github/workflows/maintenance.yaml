@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          content=$(gh gist view 2af7544c14b2b137019d15e53fb06a03 -r -f allowed-endpoints | grep -v '^#' | grep -v '^$')
+          content=$(gh gist view 2af7544c14b2b137019d15e53fb06a03 -r -f allowed-endpoints | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
           echo "content=${content}" >> $GITHUB_OUTPUT
       - name: Harden the runner
         uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
