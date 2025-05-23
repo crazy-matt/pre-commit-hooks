@@ -1,0 +1,31 @@
+name: Harden Runner with Gist Endpoints
+description: Fetch allowed endpoints from gist and run harden-runner
+
+inputs:
+  gist-id:
+    description: 'Gist ID containing allowed endpoints'
+    required: true
+  gist-token:
+    description: Token with gist scope
+    required: true
+  egress-policy:
+    description: Egress policy (audit or block)
+    required: false
+    default: block
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch allowed endpoints
+        id: fetch_allowed_endpoints
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ inputs.gist-token }}
+        run: |
+          content=$(gh gist view ${{ inputs.gist-id }} -r -f allowed-endpoints | grep -v '^#' | grep -v '^$')
+          echo "content=${content}" >> $GITHUB_OUTPUT
+      - name: Harden the runner
+        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        with:
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ steps.fetch_allowed_endpoints.outputs.content }}

@@ -38,11 +38,10 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
-      - name: Harden the runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      - uses: ./.github/actions/allow-endpoints
         with:
-          policy: default
-          egress-policy: audit
+          gist-id: 2af7544c14b2b137019d15e53fb06a03
+          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
@@ -60,11 +59,10 @@ jobs:
       pull-requests: read
       id-token: write
     steps:
-      - name: Harden the runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      - uses: ./.github/actions/allow-endpoints
         with:
-          policy: default
-          egress-policy: audit
+          gist-id: 2af7544c14b2b137019d15e53fb06a03
+          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
         with:
@@ -90,10 +88,10 @@ jobs:
       security-events: write
       id-token: write
     steps:
-      - name: Harden the runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      - uses: ./.github/actions/allow-endpoints
         with:
-          policy: default
+          gist-id: 2af7544c14b2b137019d15e53fb06a03
+          gist-token: ${{ secrets.BOT_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - name: Detect vulnerabilities
