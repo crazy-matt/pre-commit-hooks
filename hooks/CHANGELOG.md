@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.1...v1.0.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* **ci:** trigger the releaser to test minor adustments on the relaser ([bc15b71](https://github.com/crazy-matt/pre-commit-hooks/commit/bc15b7166199d9929b7df09270a6ae56ed84dec9))
+
 ## [1.0.1](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.0...v1.0.1) (2025-05-23)
 
 
