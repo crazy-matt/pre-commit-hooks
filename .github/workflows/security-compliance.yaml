@@ -48,7 +48,7 @@ jobs:
       - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          configFile: .github/.linters/commitlint.config.mjs
+          configFile: .linters/commitlint.config.mjs
 
   secrets_scan:
     name: Secrets Scan
