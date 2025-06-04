@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.1...v1.0.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* shorten detect-unsigned-commit hook message ([b614a5c](https://github.com/crazy-matt/pre-commit-hooks/commit/b614a5c6a4f0b39be7851c2a05ab56e47a1b4e4d))
+
 ## [1.0.1](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.0...v1.0.1) (2025-05-23)
 
 
