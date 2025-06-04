@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.1...v1.1.0) (2025-06-04)
+
+
+### Features
+
+* **ci:** trigger the releaser for testing ([f113f8f](https://github.com/crazy-matt/pre-commit-hooks/commit/f113f8f0a35cdf9563741a664da49c60df417822))
+
+
+### Bug Fixes
+
+* trigger releaser to test ci firewall ([c3dfee1](https://github.com/crazy-matt/pre-commit-hooks/commit/c3dfee1a376b1dd1c2aca2c4bd71e9ed36cd0bf0))
+
 ## [1.0.1](https://github.com/crazy-matt/pre-commit-hooks/compare/v1.0.0...v1.0.1) (2025-05-23)
 
 
