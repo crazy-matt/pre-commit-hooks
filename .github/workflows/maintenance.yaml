@@ -105,7 +105,7 @@ jobs:
     name: Dependabot Automerger
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    if: github.event.repository.visibility == 'private' && github.event.pull_request.user.login == 'dependabot[bot]'
     permissions:
       contents: write
       pull-requests: write
