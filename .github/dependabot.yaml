@@ -19,3 +19,5 @@ updates:
       automerged-versions:
         applies-to: version-updates
         update-types: [minor, patch]
+      actions-breaking:
+        update-types: [major]
