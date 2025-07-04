@@ -39,7 +39,7 @@ jobs:
       id-token: write
     steps:
       #- name: Harden runner
-      #  uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+      #  uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
       #  with:
       #    egress-policy: audit
       #    allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
@@ -61,7 +61,7 @@ jobs:
       id-token: write
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: block
           allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
@@ -91,14 +91,14 @@ jobs:
       id-token: write
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: block
           allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - name: Detect vulnerabilities
-        uses: aquasecurity/trivy-action@76071ef0d7ec797419534a183b498b4d6366cf37 # ratchet:aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@dc5a429b52fcf669ce959baa2c2dd26090d2a6c4 # ratchet:aquasecurity/trivy-action@master
         with:
           scan-type: fs
           github-pat: ${{ secrets.GITHUB_TOKEN }}
