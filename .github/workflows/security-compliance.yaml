@@ -44,7 +44,7 @@ jobs:
       #    egress-policy: audit
       #    allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
       - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
       - uses: wagoid/commitlint-github-action@b948419dd99f3fd78a6548d48f94e3df7f6bf3ed # ratchet:wagoid/commitlint-github-action@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -66,7 +66,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
       - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Scan
@@ -96,7 +96,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: ${{ vars.ALLOWED_ENDPOINTS }}
       - name: Checkout repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
       - name: Detect vulnerabilities
         uses: aquasecurity/trivy-action@dc5a429b52fcf669ce959baa2c2dd26090d2a6c4 # ratchet:aquasecurity/trivy-action@master
         with:
