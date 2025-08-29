@@ -98,7 +98,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
       - name: Detect vulnerabilities
-        uses: aquasecurity/trivy-action@dc5a429b52fcf669ce959baa2c2dd26090d2a6c4 # ratchet:aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@f9424c10c36e288d5fa79bd3dfd1aeb2d6eae808 # ratchet:aquasecurity/trivy-action@master
         with:
           scan-type: fs
           github-pat: ${{ secrets.GITHUB_TOKEN }}
